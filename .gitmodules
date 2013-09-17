@@ -1,0 +1,3 @@
+[submodule "static/rickshaw"]
+	path = static/rickshaw
+	url = git@github.com:shutterstock/rickshaw.git
