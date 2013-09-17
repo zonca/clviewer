@@ -8,6 +8,8 @@ This file creates your application.
 
 import os
 from flask import Flask, render_template, request, redirect, url_for
+import gists
+import json
 
 app = Flask(__name__)
 
@@ -29,6 +31,10 @@ def about():
     """Render the website's about page."""
     return render_template('about.html')
 
+@app.route('/<int:gist_id>')
+def gist(gist_id):
+    data = gists.get_data(gist_id)
+    return render_template("clviewer.html", data=json.dumps(data))
 
 ###
 # The functions below should be applicable to all Flask apps.
