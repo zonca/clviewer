@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block css %}
+	<link type="text/css" rel="stylesheet" href="/static/rickshaw/src/css/graph.css">
+	<link type="text/css" rel="stylesheet" href="/static/rickshaw/src/css/detail.css">
+	<link type="text/css" rel="stylesheet" href="/static/rickshaw/src/css/legend.css">
+	<link type="text/css" rel="stylesheet" href="/static/rickshaw/examples/css/lines.css">
+	<link type="text/css" rel="stylesheet" href="/static/rickshaw/examples/css/extensions.css">
+	<link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css">
+
+	<script src="/static/rickshaw/vendor/d3.v2.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+	<script src="/static/rickshaw/rickshaw.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+{% endblock %}
+<body>
+
+{% block main %}
+    <div id="chart_container">
+        <h1>Cosmic Microwave Background Angular Power Spectra Viewer</h1> 
+        <div id="chart"></div>
+        <div id="legend_container">
+            <div id="smoother" title="Smoothing"></div>
+            <div id="legend"></div>
+        </div>
+        <div id="slider"></div>
+    </div>
+    <div id="text_container" style="float:left">
+        <p>X axis: $\ell$ <br />Y axis: $\ell(\ell+1)/2\pi [\mu K^2] $</p>
+        <p>Click on legend tickboxes to hide/show plot, click on legend label to show one plot at a time, use bottom slider to change X axis range</p>
+
+    </ul>
+    </div>
+{% endblock %}
+
+{% block js %}
+<script>
+
+      var palette = new Rickshaw.Color.Palette();
+
+      var data = {{ data|safe }};
+
+        var series = data.map(function(d) {
+            return { color : palette.color(),
+                     data : d["data"],
+                     name : d["name"] }});
+
+        var graph = new Rickshaw.Graph( {
+            element: document.getElementById("chart"),
+            width: 700,
+            height: 500,
+            renderer: 'line',
+            min : 'auto',
+            series: series
+        } );
+
+        graph.render();
+
+        var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+            graph: graph,
+            xFormatter : function(x) {return "ell:" + x}
+        } );
+
+        var legend = new Rickshaw.Graph.Legend( {
+            graph: graph,
+            element: document.getElementById('legend')
+
+        } );
+
+        var slider = new Rickshaw.Graph.RangeSlider( {
+            graph: graph,
+            element: $('#slider')
+        } );
+
+        var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+            graph: graph,
+            legend: legend
+        } );
+
+        var axes = new Rickshaw.Graph.Axis.X( {
+            graph: graph
+        } );
+        axes.render();
+
+        var axesy = new Rickshaw.Graph.Axis.Y( {
+            graph: graph
+        } );
+        axesy.render();
+</script>
+{% endblock %}
