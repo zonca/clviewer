@@ -7,9 +7,11 @@ This file creates your application.
 """
 
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, Markup
 import gists
 import json
+import markdown
+from StringIO import StringIO
 
 app = Flask(__name__)
 
@@ -23,7 +25,10 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'this_should_be_configur
 @app.route('/')
 def home():
     """Render website's home page."""
-    return render_template('home.html')
+    buf = StringIO()
+    markdown.markdownFromFile("README.md", output=buf)
+    html = Markup(buf.getvalue())
+    return render_template('home.html', html=html)
 
 
 @app.route('/about/')
