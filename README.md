@@ -1,7 +1,7 @@
 Interactive visualization of CMB Angular power spectrum plots
 ($C_l$) pasted to github gists.
 
-Paste a gist number, i.e. the last component of a gist address (integer):
+Paste a gist number, i.e. the last component of a gist address (integer, without github username):
 
 <form onsubmit="location.href='/' + document.getElementById('myInput').value; return false;">
   <input type="text" id="myInput" />
@@ -17,7 +17,7 @@ column is $\ell$, second column is $C_{\ell}$, space separated, example:
 
 * Paste the gist number (i.e. 6599016) in the form at <http://clviewer.herokuapp.com>, or use direct URL, example:
 
-    <http://clviewer.herokuapp.com/zonca/6599016>
+    <http://clviewer.herokuapp.com/6599016>
 
  
 * The `python` application parses the content of the gists and produces an interactive plot,
