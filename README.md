@@ -15,7 +15,10 @@ column is $\ell$, second column is $C_{\ell}$, space separated, example:
 
     <http://gist.github.com/zonca/6599016>
 
-* Paste the gist number (i.e. 6599016) in the form at <http://clviewer.herokuapp.com>
+* Paste the gist number (i.e. 6599016) in the form at <http://clviewer.herokuapp.com>, or use direct URL, example:
+
+    <http://clviewer.herokuapp.com/zonca/6599016>
+
  
 * The `python` application parses the content of the gists and produces an interactive plot,
 using the filename as the label for each curve
